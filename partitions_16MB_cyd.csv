@@ -1,0 +1,9 @@
+# Name,   Type, SubType, Offset,  Size, Flags
+# 16MB flash layout for CYD-GOLD/netradio port:
+#   7MB app (large UI + fonts + logos fit) + ~9MB file storage (/config.bin, /radios.json)
+# NOTE: Arduino LittleFS looks for partition LABEL "spiffs" by default,
+# so the label must stay "spiffs" even though the subtype is littlefs.
+nvs,      data, nvs,      0x9000,  0x5000,
+otadata,  data, ota,      0xe000,  0x2000,
+app0,     app,  ota_0,    0x10000, 0x700000,
+spiffs,   data, littlefs, 0x710000,0x8F0000,
