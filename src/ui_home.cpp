@@ -25,6 +25,7 @@ extern lv_obj_t*   radio_img;
 extern lv_obj_t*   date_label;
 extern lv_obj_t*   wifi_icon_label;
 extern lv_obj_t*   batt_icon_label;
+extern lv_obj_t*   ip_label;
 extern Audio       audio;
 extern bool        is_playing;
 extern String      current_title;
@@ -48,6 +49,7 @@ static void reset_home_pointers() {
     date_label        = NULL;
     wifi_icon_label   = NULL;
     batt_icon_label   = NULL;
+    ip_label          = NULL;
     now_playing_label = NULL;
     for (int i = 0; i < 5; i++) ui_visualizer_bars[i] = NULL;
 }
@@ -208,6 +210,17 @@ void setup_home_screen() {
     lv_obj_set_style_text_color(batt_icon_label, currentTheme->text_main, 0);
     lv_obj_align(batt_icon_label, LV_ALIGN_TOP_LEFT, 35, 30);
     lv_label_set_text(batt_icon_label, LV_SYMBOL_BATTERY_FULL);
+
+    // --- IP address (right after battery) ---
+    ip_label = lv_label_create(lv_scr_act());
+    lv_obj_set_style_text_font(ip_label, ui_font(12), 0);
+    lv_obj_set_style_text_color(ip_label, currentTheme->text_muted, 0);
+    lv_obj_align(ip_label, LV_ALIGN_TOP_LEFT, 63, 32);
+    if (WiFi.status() == WL_CONNECTED) {
+        lv_label_set_text(ip_label, WiFi.localIP().toString().c_str());
+    } else {
+        lv_label_set_text(ip_label, "--");
+    }
 
     // --- Navigation buttons (4 x 70x70, centered at bottom) ---
     // Positions : x offsets from center = -165, -55, +55, +165 (480px wide)

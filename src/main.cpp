@@ -96,6 +96,7 @@ lv_obj_t * time_label;
 lv_obj_t * date_label;
 lv_obj_t * wifi_icon_label;
 lv_obj_t * batt_icon_label;
+lv_obj_t * ip_label;
 
 // =====================================================
 //  CONFIG PERSISTENCE (LittleFS /config.bin)
@@ -472,6 +473,12 @@ void update_time(bool force) {
     if (!have_time) {
         if (time_label != NULL && lv_obj_is_valid(time_label))
             lv_label_set_text(time_label, "--:--");
+        if (ip_label != NULL && lv_obj_is_valid(ip_label)) {
+            if (WiFi.status() == WL_CONNECTED)
+                lv_label_set_text(ip_label, WiFi.localIP().toString().c_str());
+            else
+                lv_label_set_text(ip_label, "--");
+        }
         return;
     }
 
@@ -515,6 +522,15 @@ void update_time(bool force) {
         else               lv_label_set_text(batt_icon_label, LV_SYMBOL_BATTERY_EMPTY);
         lv_obj_set_style_text_color(batt_icon_label,
             bat < 20 ? lv_palette_main(LV_PALETTE_RED) : currentTheme->text_muted, 0);
+    }
+
+    // ===== IP ADDRESS (right after battery) =====
+    if (ip_label != NULL && lv_obj_is_valid(ip_label)) {
+        if (WiFi.status() == WL_CONNECTED) {
+            lv_label_set_text(ip_label, WiFi.localIP().toString().c_str());
+        } else {
+            lv_label_set_text(ip_label, "--");
+        }
     }
 }
 
