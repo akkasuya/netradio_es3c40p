@@ -29,6 +29,23 @@ void setup_display() {
     analogWrite(TFT_BL, map(userConfig.brightness, 0, 100, 0, 255));
 }
 
+// Boot splash: "LOADING..." centered, shown with TFT_eSPI directly
+// (LVGL isn't running yet during setup, so the screen would stay black).
+// Call with a short stage label, e.g. show_boot_msg("WiFi...").
+// setup_home_screen() redraws the whole screen via LVGL, replacing this.
+void show_boot_msg(const char* sub = nullptr) {
+    tft.fillScreen(TFT_BLACK);
+    tft.setTextDatum(MC_DATUM);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextSize(3);
+    tft.drawString("LOADING...", TFT_W / 2, TFT_H / 2 - 12);
+    if (sub && sub[0] != '\0') {
+        tft.setTextSize(2);
+        tft.setTextColor(TFT_LIGHTGREY, TFT_BLACK);
+        tft.drawString(sub, TFT_W / 2, TFT_H / 2 + 22);
+    }
+}
+
 void setup_sd_card() {
     // --- Internal flash first: radio + buzzer work with no SD card ---
     if (!LittleFS.exists("/radios.json")) {

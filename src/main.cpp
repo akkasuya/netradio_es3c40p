@@ -553,6 +553,7 @@ void setup() {
 
     // --- Hardware and file system init ---
     setup_display();
+    show_boot_msg("Init...");
     if (setup_i2c_and_codec() == ESP_OK) {
         Serial.println("[CODEC] OK");
         codec_volume(90); // analog stage ~-13dB: pairs with digital default 13
@@ -587,6 +588,7 @@ void setup() {
     analogWrite(TFT_BL, map(userConfig.brightness, 0, 100, 0, 255));
     apply_language(userConfig.language);
 
+    show_boot_msg("SD...");
     setup_sd_card();
     loadStationsFromSD();
 
@@ -617,6 +619,7 @@ void setup() {
 #endif
 
     // --- WiFi AUTOMATIQUE ---
+    show_boot_msg("WiFi...");
     if (strlen(userConfig.wifi_ssid) > 0) {
         Serial.printf("[WIFI] Auto-connect: %s\n", userConfig.wifi_ssid);
         WiFi.disconnect();
@@ -644,6 +647,7 @@ void setup() {
         setup_web_server();
     }
 
+    show_boot_msg("UI...");
     lv_init();
 
     // Hardware timer  1ms LVGL tick (independent of loop)
