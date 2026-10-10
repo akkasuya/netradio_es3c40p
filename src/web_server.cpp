@@ -3,21 +3,10 @@
 #include <LittleFS.h>
 #include <ArduinoJson.h>
 
-// ===== SÉCURITÉ WEB =====
-// Changez ce mot de passe avant de flasher !
-#define WEB_USER     "admin"
-#define WEB_PASSWORD "cydgold"
-
-// Macro pratique : bloque la requête si non authentifié
-#define REQUIRE_AUTH() \
-    if (!server.authenticate(WEB_USER, WEB_PASSWORD)) \
-        return server.requestAuthentication();
-
 WebServer server(80);
 
 // ===== PAGE WEB =====
 void handleRoot() {
-    REQUIRE_AUTH();
     String html = "<html><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1'>";
     html += "<title>CYD-GOLD Manager</title>";
     
@@ -182,7 +171,6 @@ void setup_web_server() {
 
     // --- fonction delete mp3 ---
     server.on("/delete", []() {
-        REQUIRE_AUTH();
         String fileName = server.arg("file");
         String path = "/mp3/" + fileName;
         if (SD.remove(path)) {
@@ -194,7 +182,6 @@ void setup_web_server() {
 
     // --- fonction upload mp3 ---
     server.on("/update", HTTP_POST, []() {
-    REQUIRE_AUTH();
     // On envoie une petite page HTML au lieu d'un texte brut
     String response = "<html><body style='background:#121212;color:#d4af37;text-align:center;font-family:sans-serif;padding-top:50px;'>";
     response += "<h2>Fichier recu !</h2>";
@@ -228,7 +215,6 @@ void setup_web_server() {
 
     // --- fonction ajout radio ---
     server.on("/add_radio", HTTP_POST, []() {
-    REQUIRE_AUTH();
     String name = server.arg("name");
     String url = server.arg("url");
     String logoRaw = server.arg("logo");
@@ -277,8 +263,7 @@ void setup_web_server() {
    
     // --- fonction delete radio ---
     server.on("/delete_radio", HTTP_GET, []() {
-      REQUIRE_AUTH();
-      if (server.hasArg("id")) {
+        if (server.hasArg("id")) {
         int id = server.arg("id").toInt();
         
         File file = LittleFS.open("/radios.json", FILE_READ);
@@ -306,7 +291,6 @@ void setup_web_server() {
 
     // --- fonction upload logo ---
     server.on("/upload_logo", HTTP_POST, []() {
-        REQUIRE_AUTH();
         server.sendHeader("Location", "/"); 
         server.send(303);
     }, []() {
@@ -331,7 +315,6 @@ void setup_web_server() {
 
     // --- fonction reboot ---
     server.on("/reboot", []() {
-    REQUIRE_AUTH();
     server.send(200, "text/html", "<html><body style='background:#1a1a1a;color:white;text-align:center;font-family:sans-serif;'><h1>Redemarrage en cours...</h1><p>L'AudioCYD-GOLD revient dans quelques secondes.</p><script>setTimeout(function(){location.href='/';}, 5000);</script></body></html>");
     delay(1000);
     ESP.restart();

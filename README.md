@@ -77,4 +77,4 @@ pio device monitor         # ดู log 115200
 4. **ST7796 init**: ใช้ init มาตรฐานของ TFT_eSPI ถ้าจอดำ/ลาย
    ให้นำ `ST7796_Init.h` จาก data package ของ LCDWiki มาทับ
 5. ที่เหลือเหมือน netradio ทุกอย่าง: WiFi seed `DRBOM`, web manager
-   `admin/cydgold`, SD SPI mode, RTC DS3231 optional, sleep switch ปิด
+   (no auth), SD SPI mode, RTC DS3231 optional, sleep switch ปิด
