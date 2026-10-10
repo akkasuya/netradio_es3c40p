@@ -10,6 +10,7 @@ Internet Radio / MP3 Player / Alarm Clock บนบอร์ด **LCDWiki ES3C40
 ![หน้านาฬิกา + วิทยุ](docs/home-clock.jpg)
 
 - ต้นฉบับ: `/home/pi/Documents/ESP/es3c28p/netradio` (บอร์ด ES3C28P 2.8" ILI9341)
+- Original: https://github.com/cyrilrudler-create/Reveil-CYDGOLD
 - HW ref: https://www.lcdwiki.com/4.0inch_ESP32-S3_Display
 
 ## สิ่งที่เปลี่ยนจากต้นฉบับ (ES3C28P → ES3C40P)
