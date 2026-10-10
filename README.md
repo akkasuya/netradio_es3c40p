@@ -3,6 +3,12 @@
 Internet Radio / MP3 Player / Alarm Clock บนบอร์ด **LCDWiki ES3C40P**
 (ESP32-S3 N16R8, จอ ST7796S 4.0" 320x480 + ทัช FT6336U + เสียง ES8311)
 
+## รูปเครื่องจริง
+
+![ด้านหลังบอร์ด ES3C40P](docs/board-back.jpg)
+![หน้าตั้งค่า ภาษาไทย](docs/settings-thai.jpg)
+![หน้านาฬิกา + วิทยุ](docs/home-clock.jpg)
+
 - ต้นฉบับ: `/home/pi/Documents/ESP/es3c28p/netradio` (บอร์ด ES3C28P 2.8" ILI9341)
 - HW ref: https://www.lcdwiki.com/4.0inch_ESP32-S3_Display
 
